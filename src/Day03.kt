@@ -4,7 +4,7 @@ fun main() {
 
     fun part1(input: List<String>): Int {
         val inputValue = input.first().toInt()
-        var direction = Direction.Right
+        var direction = Direction.East
         // position format: sequence position, x position, y position
         var position = Triple(1, 0, 0)
         // spaceX, spaceY format: x min and max, y min and max
@@ -12,28 +12,28 @@ fun main() {
         var spaceY = -1 to 1
         while (position.first < inputValue) {
             // Update limits and direction
-            if (direction == Direction.Right && position.second == spaceX.second) {
-                direction = Direction.Up
+            if (direction == Direction.East && position.second == spaceX.second) {
+                direction = Direction.North
                 spaceX = spaceX.first to (spaceX.second + 1)
             }
-            if (direction == Direction.Left && position.second == spaceX.first) {
-                direction = Direction.Down
+            if (direction == Direction.West && position.second == spaceX.first) {
+                direction = Direction.South
                 spaceX = (spaceX.first - 1) to spaceX.second
             }
-            if (direction == Direction.Up && position.third == spaceY.second) {
-                direction = Direction.Left
+            if (direction == Direction.North && position.third == spaceY.second) {
+                direction = Direction.West
                 spaceY = spaceY.first to (spaceY.second + 1)
             }
-            if (direction == Direction.Down && position.third == spaceY.first) {
-                direction = Direction.Right
+            if (direction == Direction.South && position.third == spaceY.first) {
+                direction = Direction.East
                 spaceY = (spaceY.first - 1) to spaceY.second
             }
             // Update position
             when (direction) {
-                Direction.Up -> position = Triple(position.first + 1, position.second, position.third + 1)
-                Direction.Down -> position = Triple(position.first + 1, position.second, position.third - 1)
-                Direction.Left -> position = Triple(position.first + 1, position.second - 1, position.third)
-                Direction.Right -> position = Triple(position.first + 1, position.second + 1, position.third)
+                Direction.North -> position = Triple(position.first + 1, position.second, position.third + 1)
+                Direction.South -> position = Triple(position.first + 1, position.second, position.third - 1)
+                Direction.West -> position = Triple(position.first + 1, position.second - 1, position.third)
+                Direction.East -> position = Triple(position.first + 1, position.second + 1, position.third)
                 else -> position = Triple(position.first + 1, position.second, position.third + 1)
             }
         }
@@ -43,35 +43,35 @@ fun main() {
     fun part2(input: List<String>): Int {
         val inputValue = input.first().toInt()
         var cache: MutableMap<String, Int> = listOf("0:0" to 1).toMap().toMutableMap()
-        var direction = Direction.Right
+        var direction = Direction.East
         var position = 0 to 0
         var spaceX = -1 to 1
         var spaceY = -1 to 1
         var positionValue = 0
         while (positionValue <= inputValue) {
             // Update limits and direction
-            if (direction == Direction.Right && position.first == spaceX.second) {
-                direction = Direction.Up
+            if (direction == Direction.East && position.first == spaceX.second) {
+                direction = Direction.North
                 spaceX = spaceX.first to (spaceX.second + 1)
             }
-            if (direction == Direction.Left && position.first == spaceX.first) {
-                direction = Direction.Down
+            if (direction == Direction.West && position.first == spaceX.first) {
+                direction = Direction.South
                 spaceX = (spaceX.first - 1) to spaceX.second
             }
-            if (direction == Direction.Up && position.second == spaceY.second) {
-                direction = Direction.Left
+            if (direction == Direction.North && position.second == spaceY.second) {
+                direction = Direction.West
                 spaceY = spaceY.first to (spaceY.second + 1)
             }
-            if (direction == Direction.Down && position.second == spaceY.first) {
-                direction = Direction.Right
+            if (direction == Direction.South && position.second == spaceY.first) {
+                direction = Direction.East
                 spaceY = (spaceY.first - 1) to spaceY.second
             }
             // Update position
             position = when (direction) {
-                Direction.Up -> position.first to (position.second + 1)
-                Direction.Down -> position.first to (position.second - 1)
-                Direction.Left -> (position.first - 1) to position.second
-                Direction.Right -> (position.first + 1) to position.second
+                Direction.North -> position.first to (position.second + 1)
+                Direction.South -> position.first to (position.second - 1)
+                Direction.West -> (position.first - 1) to position.second
+                Direction.East -> (position.first + 1) to position.second
                 else -> position.first to (position.second + 1)
             }
             positionValue = cache.getOrDefault(
