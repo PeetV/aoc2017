@@ -720,7 +720,7 @@ class NodeIndexedGraph<N : Comparable<N>, E> : UnIndexedGraph<N, E>(), Graph<N, 
 class NodeMappedGraph<N, E> : UnIndexedGraph<N, E>(), Graph<N, E> {
     private var nodeMap = mutableMapOf<N, Int>()
 
-    override fun toString(): String = "NodeMappedGraph[order=${this.order}, size=${this.size}"
+    override fun toString(): String = "NodeMappedGraph[order=${this.order}, size=${this.size}]"
 
     override fun addNode(node: N): Result<Unit> {
         val nextIndex = order
